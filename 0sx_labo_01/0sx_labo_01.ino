@@ -4,7 +4,10 @@ const int ledPin = 13;
 //définir l'état de l'application
 
 
-enum AppState {FIRST, SECOND, THIRD, FOURTH};
+enum AppState { FIRST,
+                SECOND,
+                THIRD,
+                FOURTH };
 AppState currentState = FIRST;
 
 void setup() {
@@ -14,28 +17,28 @@ void setup() {
 
 void loop() {
 
-  switch(currentState) {
+  switch (currentState) {
     case FIRST:
       Serial.print("Allumé :");
       Serial.println("2206160");
       ON();
-    break;
+      break;
     case SECOND:
-      blinkFour();      
-    break;
+      blinkFour();
+      break;
     case THIRD:
       delay(1000);
       Serial.print("Variation :");
       Serial.println("2206160");
       fade();
       delay(1000);
-      
-    break;
+
+      break;
     case FOURTH:
       Serial.print("Éteint :");
       Serial.println("2206160");
       Off();
-    break;
+      break;
   }
 }
 
@@ -48,9 +51,9 @@ void ON() {
   static int counter = 0;
 
   //inverser l'état de la DEL
-  
+
   digitalWrite(ledPin, HIGH);
-  
+
   counter++;
   if (counter == 1) {
     counter = 0;
@@ -67,21 +70,24 @@ void blinkFour() {
   // Compteur d'appels
   static int counter = 0;
 
-  for (int i = 0; i < 4; i++) {
+  Serial.print("Clignotement :");
+  Serial.println(" 220610");
+
+  for (int i = 0; i < 8; i++) {
     digitalWrite(ledPin, ledState);
-    Serial.print("Clignotement :");
-    Serial.println(" 220610");
+    ledState = !ledState;
     delay(250);
+
     //ledState = ledState;
-    digitalWrite(ledPin, !ledState);
-    delay(250);
+    //digitalWrite(ledPin, !ledState);
+    //delay(250);
   }
-  
+
   counter++;
   if (counter == 1) {
     counter = 0;
     currentState = THIRD;
-  } 
+  }
 }
 
 void fade() {
@@ -101,7 +107,7 @@ void fade() {
     Serial.print(fadeValue);
     Serial.println(" % ");
   }
-  
+
   currentState = FOURTH;
 }
 
@@ -112,9 +118,9 @@ void Off() {
   static int counter = 0;
 
   //inverser l'état de la DEL
-  
+
   digitalWrite(ledPin, LOW);
-  
+
   counter++;
   if (counter == 1) {
     counter = 0;
@@ -122,5 +128,3 @@ void Off() {
   }
   delay(2000);
 }
-
-
