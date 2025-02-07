@@ -4,7 +4,7 @@ const int ledPin = 13;
 //définir l'état de l'application
 
 
-enum AppState {FIRST, SECOND, THIRD};
+enum AppState {FIRST, SECOND, THIRD, FOURTH};
 AppState currentState = FIRST;
 
 void setup() {
@@ -19,10 +19,11 @@ void loop() {
       Serial.print("Allumé : ");
       Serial.println("2206160");
       ON();
+      delay(1000);
     break;
     case SECOND:
       Serial.print("Clignotement :");
-     Serial.println("220610");
+      Serial.println("220610");
       blinkFast();
     break;
     case THIRD:
@@ -31,7 +32,13 @@ void loop() {
       Serial.println("2206160");
       fade();
       delay(1000);
+      
+    break;
+    case FOURTH:
+    Serial.print("Éteint :");
+    Serial.println("2206160");
       Off();
+      delay(1000);
     break;
   }
 }
@@ -81,6 +88,7 @@ void fade() {
     analogWrite(ledPin, fadeValue);
     // wait for 30 milliseconds to see the dimming effect
     delay(30);
+    
   }
 
   // fade out from max to min in increments of 5 points:
@@ -89,9 +97,11 @@ void fade() {
     analogWrite(ledPin, fadeValue);
     // wait for 30 milliseconds to see the dimming effect
     delay(30);
+    Serial.print(fadeValue);
+    Serial.println(" % ");
   }
   
-  currentState = FIRST;
+  currentState = FOURTH;
 }
 
 void Off() {
