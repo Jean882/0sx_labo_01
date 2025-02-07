@@ -16,16 +16,12 @@ void loop() {
 
   switch(currentState) {
     case FIRST:
-      Serial.print("Allumé : ");
+      Serial.print("Allumé :");
       Serial.println("2206160");
       ON();
-      delay(1000);
     break;
     case SECOND:
-      Serial.print("Clignotement :");
-      Serial.println("220610");
-      blinkFast();
-      
+      blinkFour();      
     break;
     case THIRD:
       delay(1000);
@@ -36,10 +32,9 @@ void loop() {
       
     break;
     case FOURTH:
-    Serial.print("Éteint :");
-    Serial.println("2206160");
+      Serial.print("Éteint :");
+      Serial.println("2206160");
       Off();
-      delay(1000);
     break;
   }
 }
@@ -64,23 +59,29 @@ void ON() {
   delay(2000);
 }
 
-void blinkFast() {
+void blinkFour() {
   // Variables statiques pour conserver
   // l'état de la DEL à chaque appel
   static bool ledState = LOW;
 
   // Compteur d'appels
   static int counter = 0;
+
+  for (int i = 0; i < 4; i++) {
+    digitalWrite(ledPin, ledState);
+    Serial.print("Clignotement :");
+    Serial.println(" 220610");
+    delay(250);
+    //ledState = ledState;
+    digitalWrite(ledPin, !ledState);
+    delay(250);
+  }
   
-  //inverser l'état de la DEL
-  ledState = !ledState;
-  digitalWrite(ledPin, ledState);
-  delay(500);
   counter++;
-  if (counter == 4) {
+  if (counter == 1) {
     counter = 0;
     currentState = THIRD;
-  }
+  } 
 }
 
 void fade() {
@@ -89,7 +90,6 @@ void fade() {
     analogWrite(ledPin, fadeValue);
     // wait for 30 milliseconds to see the dimming effect
     delay(30);
-    
   }
 
   // fade out from max to min in increments of 5 points:
@@ -120,6 +120,7 @@ void Off() {
     counter = 0;
     currentState = FIRST;
   }
+  delay(2000);
 }
 
 
