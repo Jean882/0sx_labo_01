@@ -60,7 +60,7 @@ void ON() {
     counter = 0;
     currentState = SECOND;
   }
-  delay(1000);
+  delay(2000);
 }
 
 void blinkFast() {
