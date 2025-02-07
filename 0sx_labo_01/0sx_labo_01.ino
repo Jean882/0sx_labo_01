@@ -25,6 +25,7 @@ void loop() {
       Serial.print("Clignotement :");
       Serial.println("220610");
       blinkFast();
+      
     break;
     case THIRD:
       delay(1000);
@@ -74,7 +75,7 @@ void blinkFast() {
   //inverser l'état de la DEL
   ledState = !ledState;
   digitalWrite(ledPin, ledState);
-  delay(250);
+  delay(500);
   counter++;
   if (counter == 4) {
     counter = 0;
